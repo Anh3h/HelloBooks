@@ -1,0 +1,5 @@
+### Pycharm IDEA ###
+.idea/
+venv/
+__*
+HelloBooks/__pycache__/settings.cpython-35.pyc
