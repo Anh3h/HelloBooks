@@ -8,11 +8,11 @@ class Topic(models.Model):
 class Book(models.Model):
     title = models.CharField(max_length=30)
     isbn = models.CharField(blank='', max_length=20)
-    author = models.CharField(max_length=30)
-    edition = models.CharField(max_length=15)
-    publisher = models.CharField(blank='', max_length=30)
+    author = models.CharField(max_length=30, blank='', null=True)
+    edition = models.CharField(max_length=15, blank='', null=True)
+    publisher = models.CharField(max_length=30, blank='', null=True)
     publication_date = models.DateField(null=True, blank='')
-    link = models.CharField(max_length=100)
+    link = models.CharField(max_length=100, blank='', null=True)
     up_votes = models.IntegerField()
     down_votes = models.IntegerField()
     downloads = models.IntegerField

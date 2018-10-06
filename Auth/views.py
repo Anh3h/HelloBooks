@@ -1,5 +1,6 @@
+from django.contrib.auth.models import User
 from django.http import Http404
-from rest_framework import status
+from rest_framework import generics, status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -7,8 +8,11 @@ from Auth.models import Profile
 from .serializers import ProfileSerializer, FavBooksSerializer, ReadingListSerializer
 
 
-class ProfileList(APIView):
+class ProfileList(generics.ListCreateAPIView):
     """List all user profiles or create a new user profile"""
+
+    queryset = Profile.objects.all()
+    serializer_class = ProfileSerializer
 
     def get(self, request, format=None):
         profiles = Profile.objects.all()
@@ -23,13 +27,22 @@ class ProfileList(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-class ProfileDetail(APIView):
+class ProfileDetail(generics.RetrieveUpdateDestroyAPIView):
     """Retrieve, update and delete a profile instance"""
+
+    queryset = Profile.objects.all()
+    serializer_class = ProfileSerializer
 
     def get_profile(self, profile_id):
         try:
             return Profile.objects.get(pk=profile_id)
         except Profile.DoesNotExist:
+            raise Http404
+
+    def get_user(self, user_id):
+        try:
+            return User.objects.get(pk=user_id)
+        except User.DoesNotExist:
             raise Http404
 
     def get(self, request, pk, format=None):
