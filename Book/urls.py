@@ -1,4 +1,5 @@
 from django.urls import path
+
 from . import views
 
 urlpatterns = [
@@ -6,4 +7,5 @@ urlpatterns = [
     path('topics/<int:pk>', views.TopicDetail.as_view(), name="topic-detail"),
     path('books/', views.BookList.as_view(), name="book-list"),
     path('books/<int:pk>', views.BookDetails.as_view(), name="book-detail"),
+    path('comments/', views.CommentCreate().as_view(), name='comment-create')
 ]

@@ -3,7 +3,8 @@ from rest_framework import status, generics
 from rest_framework.response import Response
 
 from Book.models import Book, Topic
-from .serializers import BookSerializer, TopicSerializer
+from Transaction.models import Comment
+from .serializers import BookSerializer, TopicSerializer, BookCommentSerializer, CommentSerializer
 
 
 class BookList(generics.ListCreateAPIView):
@@ -51,7 +52,7 @@ class BookList(generics.ListCreateAPIView):
 
 class BookDetails(generics.RetrieveUpdateDestroyAPIView):
     queryset = Book.objects.all()
-    serializer_class = BookSerializer
+    serializer_class = BookCommentSerializer
 
     def get_book(self, book_id):
         try:
@@ -61,7 +62,7 @@ class BookDetails(generics.RetrieveUpdateDestroyAPIView):
 
     def get(self, request, pk, format=None):
         book = self.get_book(pk)
-        serializer = BookSerializer(book)
+        serializer = BookCommentSerializer(book)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     def put(self, request, pk, format=None):
@@ -70,6 +71,18 @@ class BookDetails(generics.RetrieveUpdateDestroyAPIView):
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class CommentCreate(generics.CreateAPIView):
+    queryset = Comment.objects.all()
+    serializer_class = CommentSerializer
+
+    def post(self, request, format=None):
+        serializer = CommentSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
@@ -87,6 +100,7 @@ class TopicList(generics.ListCreateAPIView):
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class TopicDetail(generics.RetrieveUpdateDestroyAPIView):

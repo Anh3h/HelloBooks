@@ -96,5 +96,6 @@ def api_root(request, format=None):
     return Response({
         'users': reverse('user-list', request=request, format=format),
         'books': reverse('book-list', request=request, format=format),
+        'comments': reverse('comment-create', request=request, format=format),
         'topics': reverse('topic-list', request=request, format=format),
     })
