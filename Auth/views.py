@@ -2,6 +2,7 @@ from django.contrib.auth.models import User
 from django.http import Http404
 from rest_framework import generics, status
 from rest_framework.response import Response
+from rest_framework.reverse import reverse
 from rest_framework.views import APIView
 
 from Auth.models import Profile
@@ -87,3 +88,11 @@ class ReadingList(APIView):
         profile = self.get_profile(pk)
         serializer = ReadingListSerializer(profile)
         return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+def api_root(request):
+    return Response({
+        'users': reverse('user-list', request=request, format=format),
+        'books': reverse('book-list', request=request, format=format),
+        'topics': reverse('topic-list', request=request, format=format),
+    })
