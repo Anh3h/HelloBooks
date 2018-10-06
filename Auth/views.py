@@ -1,6 +1,7 @@
 from django.contrib.auth.models import User
 from django.http import Http404
 from rest_framework import generics, status
+from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.reverse import reverse
 from rest_framework.views import APIView
@@ -90,7 +91,8 @@ class ReadingList(APIView):
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 
-def api_root(request):
+@api_view(['GET'])
+def api_root(request, format=None):
     return Response({
         'users': reverse('user-list', request=request, format=format),
         'books': reverse('book-list', request=request, format=format),
