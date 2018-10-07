@@ -98,4 +98,5 @@ def api_root(request, format=None):
         'books': reverse('book-list', request=request, format=format),
         'comments': reverse('comment-create', request=request, format=format),
         'topics': reverse('topic-list', request=request, format=format),
+        'transaction': reverse('transaction-list', request=request, format=format),
     })
