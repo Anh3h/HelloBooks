@@ -30,7 +30,7 @@ class ProfileList(generics.ListCreateAPIView):
 
 
 class ProfileDetail(generics.RetrieveUpdateDestroyAPIView):
-    """Retrieve, update and delete a profile instance"""
+    """Retrieve, update or delete a profile instance"""
 
     queryset = Profile.objects.all()
     serializer_class = ProfileSerializer
@@ -62,7 +62,7 @@ class ProfileDetail(generics.RetrieveUpdateDestroyAPIView):
 
 
 class FavBooks(APIView):
-    """Retrieve, add and delete a user's favorite books"""
+    """Retrieve, add or delete a user's favorite books"""
 
     def get_profile(self, profile_id):
         try:
@@ -77,7 +77,7 @@ class FavBooks(APIView):
 
 
 class ReadingList(APIView):
-    """Retrieve, add and delete books to a user's reading list"""
+    """Retrieve, add or delete books to a user's reading list"""
 
     def get_profile(self, profile_id):
         try:

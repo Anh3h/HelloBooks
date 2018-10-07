@@ -8,6 +8,8 @@ from .serializers import BookSerializer, TopicSerializer, BookCommentSerializer,
 
 
 class BookList(generics.ListCreateAPIView):
+    """List all books or create a new book"""
+
     queryset = Book.objects.all()
     serializer_class = BookSerializer
 
@@ -51,6 +53,8 @@ class BookList(generics.ListCreateAPIView):
 
 
 class BookDetails(generics.RetrieveUpdateDestroyAPIView):
+    """Retrieve, update or delete a book"""
+
     queryset = Book.objects.all()
     serializer_class = BookCommentSerializer
 
@@ -75,6 +79,8 @@ class BookDetails(generics.RetrieveUpdateDestroyAPIView):
 
 
 class CommentCreate(generics.CreateAPIView):
+    """List all books or create a new comment"""
+
     queryset = Comment.objects.all()
     serializer_class = CommentSerializer
 
@@ -104,6 +110,8 @@ class TopicList(generics.ListCreateAPIView):
 
 
 class TopicDetail(generics.RetrieveUpdateDestroyAPIView):
+    """Retrieve, update or delete a comment"""
+
     queryset = Topic.objects.all()
     serializer_class = TopicSerializer
 
